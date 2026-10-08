@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>System-1 LLM Arena</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="landing">
+  <header class="hero">
+    <h1>System-1 LLM Arena</h1>
+    <p>Pick a game and pit 2–4 system-one (non-reasoning, fast) models against each other on the same seed. Each step makes one LLM call and uses the first character of the reply as the action.</p>
+    <div id="matchup" class="matchup"></div>
+    <p class="hint">Bots come from config.json. Edit endpoints under “Endpoint settings” on any game page; all games share them. Every bot joins by default; untick “Join” on a game page to leave one out.</p>
+  </header>
+
+  <main id="gameGrid" class="game-grid"></main>
+
+  <script type="module" src="landing.js"></script>
+</body>
+</html>

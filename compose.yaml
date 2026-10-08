@@ -1,0 +1,17 @@
+services:
+  web:
+    init: true
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+    # Optional: PANE_A_* ... PANE_D_*, REQUEST_TIMEOUT_MS, etc. (see docs/endpoints.md)
+    # env_file:
+    #   - path: .env
+    #     required: false
+    # config.json (copy from config.example.json first)
+    volumes:
+      - ./config.json:/app/config.json:ro
+    restart: unless-stopped

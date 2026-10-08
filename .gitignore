@@ -1,0 +1,7 @@
+config.json
+node_modules/
+.env
+
+# editor swap/backup files (a swap file of config.json contains its API keys)
+.*.sw?
+*~

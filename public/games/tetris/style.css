@@ -1,0 +1,19 @@
+body[data-game="tetris"] {
+  --cell: 22px;
+  --I: #35c9e8; --O: #f2cf3a; --T: #b06ee8; --S: #5fd068;
+  --Z: #f05a5a; --J: #4f7bf0; --L: #f29a3a;
+}
+.tetris-board {
+  display: grid; grid-template-columns: repeat(10, var(--cell)); grid-auto-rows: var(--cell);
+  gap: 1px; background: var(--line); border: 2px solid var(--line);
+}
+.tetris-board div { background: #0c0e12; }
+.tetris-board .ghost { background: transparent; box-shadow: inset 0 0 0 2px #6b7280; }
+.tetris-board .c-I { background: var(--I); } .tetris-board .c-O { background: var(--O); }
+.tetris-board .c-T { background: var(--T); } .tetris-board .c-S { background: var(--S); }
+.tetris-board .c-Z { background: var(--Z); } .tetris-board .c-J { background: var(--J); }
+.tetris-board .c-L { background: var(--L); }
+
+@media (max-width: 480px) {
+  body[data-game="tetris"] { --cell: 16px; }
+}

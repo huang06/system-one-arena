@@ -1,0 +1,13 @@
+body[data-game="snake"] { --snake-board: 300px; }
+.snake-view {
+  padding: 4px; background: var(--line); border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03), 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+.snake-board {
+  display: block; width: var(--snake-board); height: var(--snake-board);
+  border-radius: 5px; background: #0c0e12;
+}
+
+@media (max-width: 480px) {
+  body[data-game="snake"] { --snake-board: 264px; }
+}

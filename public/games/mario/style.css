@@ -1,0 +1,98 @@
+body[data-game="mario"] {
+  --mc: 18px;
+  --m-sky-top: #141c2e; --m-sky-bottom: #22314d;
+  --m-ground: #6e4428; --m-ground-dark: #573420; --m-grass: #4fb35a;
+  --m-brick: #b3563a; --m-mortar: #6d2f1f;
+  --m-block: #f0b43a; --m-used: #6b5040;
+  --m-pipe: #36a352; --m-pipe-light: #6fd186; --m-pipe-dark: #1f6d35;
+  --m-stone: #7c8596; --m-coin: #ffd44d;
+  --m-hero-cap: #e5484d; --m-hero-skin: #f3c79b; --m-hero-suit: #3f73e0;
+  --m-enemy: #a7663a; --m-enemy-dark: #6e3f21;
+}
+.mario-view { width: calc(var(--mc) * 24 + 4px); }
+.mario-grid {
+  display: grid; grid-template-columns: repeat(24, var(--mc)); grid-auto-rows: var(--mc);
+  background: linear-gradient(var(--m-sky-top), var(--m-sky-bottom));
+  border: 2px solid var(--line); border-radius: 4px; overflow: hidden;
+}
+.mario-grid div { position: relative; }
+
+/* terrain */
+.mario-t-G {
+  background:
+    radial-gradient(circle at 30% 60%, var(--m-ground-dark) 12%, transparent 13%),
+    radial-gradient(circle at 75% 25%, var(--m-ground-dark) 10%, transparent 11%),
+    var(--m-ground);
+}
+.mario-t-G.mario-top { box-shadow: inset 0 4px 0 var(--m-grass), inset 0 5px 0 #2f7a39; }
+.mario-t-B {
+  background:
+    linear-gradient(var(--m-mortar) 0 1px, transparent 1px 50%, var(--m-mortar) 50% calc(50% + 1px), transparent 0),
+    linear-gradient(90deg, transparent 0 49%, var(--m-mortar) 49% 55%, transparent 55%) 0 50% / 100% 50% no-repeat,
+    linear-gradient(90deg, var(--m-mortar) 0 6%, transparent 6%) 0 0 / 100% 50% no-repeat,
+    var(--m-brick);
+}
+.mario-t-Q, .mario-t-U { border-radius: 3px; box-shadow: inset -2px -2px 0 rgba(0, 0, 0, .35), inset 2px 2px 0 rgba(255, 255, 255, .3); }
+.mario-t-Q { background: var(--m-block); }
+.mario-t-Q::after {
+  content: '?'; position: absolute; inset: 0; display: grid; place-items: center;
+  font: 700 12px/1 ui-monospace, Menlo, Consolas, monospace; color: #7a4a0c;
+}
+.mario-t-U { background: var(--m-used); }
+.mario-t-S { background: var(--m-stone); box-shadow: inset -2px -2px 0 rgba(0, 0, 0, .35), inset 2px 2px 0 rgba(255, 255, 255, .25); }
+.mario-t-P.mario-pipe-l { background: linear-gradient(90deg, var(--m-pipe-dark) 0 10%, var(--m-pipe-light) 10% 35%, var(--m-pipe) 35%); }
+.mario-t-P.mario-pipe-r { background: linear-gradient(90deg, var(--m-pipe) 0 55%, var(--m-pipe-dark) 55% 90%, #164f27 90%); }
+.mario-t-P.mario-top { box-shadow: inset 0 3px 0 var(--m-pipe-light), inset 0 -3px 0 var(--m-pipe-dark); }
+
+/* sprites */
+.mario-player::before {
+  content: ''; position: absolute; inset: 1px 3px 1px 3px; border-radius: 5px 5px 2px 2px;
+  background: linear-gradient(var(--m-hero-cap) 0 32%, var(--m-hero-skin) 32% 52%, var(--m-hero-suit) 52%);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .45);
+}
+.mario-player::after {
+  content: ''; position: absolute; top: 5px; left: 10px; width: 6px; height: 2px;
+  background: var(--m-hero-cap); border-radius: 1px; /* cap brim facing right */
+}
+.mario-player.mario-air::before { inset: 0 3px 2px 3px; }
+.mario-player.mario-dead { filter: grayscale(1) brightness(.7); transform: rotate(180deg); }
+.mario-enemy::before {
+  content: ''; position: absolute; inset: 3px 1px 1px 1px; border-radius: 50% 50% 25% 25%;
+  background:
+    radial-gradient(circle at 34% 50%, #fff 0 14%, transparent 15%),
+    radial-gradient(circle at 66% 50%, #fff 0 14%, transparent 15%),
+    linear-gradient(transparent 0 72%, var(--m-enemy-dark) 72%),
+    var(--m-enemy);
+}
+.mario-coin::before {
+  content: ''; position: absolute; inset: 3px 5px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fff6c4 0 18%, var(--m-coin) 20%);
+  box-shadow: inset -1px -1px 0 #c79a1b;
+}
+.mario-flag, .mario-flag-top {
+  background: linear-gradient(90deg, transparent 0 44%, #cfd6e0 44% 56%, transparent 56%);
+}
+.mario-flag-top::before {
+  content: ''; position: absolute; top: 2px; left: calc(50% - 4px); width: 8px; height: 8px;
+  border-radius: 50%; background: var(--m-coin);
+}
+.mario-flag-top::after {
+  content: ''; position: absolute; top: 9px; right: 50%; width: 0; height: 0;
+  border-style: solid; border-width: 5px 12px 5px 0; border-color: transparent var(--m-grass) transparent transparent;
+}
+
+/* progress bar */
+.mario-progress { position: relative; height: 6px; margin-top: 6px; background: var(--line); border-radius: 3px; }
+.mario-progress-fill { height: 100%; width: 0; background: var(--accent); border-radius: 3px; opacity: .55; }
+.mario-progress-marker {
+  position: absolute; top: -2px; width: 10px; height: 10px; margin-left: -5px;
+  border-radius: 50%; background: var(--m-hero-cap); box-shadow: 0 0 0 2px var(--panel);
+}
+.mario-cols {
+  display: flex; justify-content: space-between; margin-top: 4px;
+  font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 480px) {
+  body[data-game="mario"] { --mc: 13px; }
+}

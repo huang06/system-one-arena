@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>System-1 LLM Arena</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a class="back" href="./">← Games</a>
+    <h1><span id="gameTitle"></span> <small>system-one benchmark</small></h1>
+    <div id="controls" class="controls">
+      <label>Seed <input id="seed" type="number" value="42"></label>
+      <label>Games K <input id="games" type="number" min="1" value="1"></label>
+      <label>Step delay ms <input id="delay" type="number" min="0" value="0"></label>
+      <button id="startBtn" class="primary">Start</button>
+      <button id="pauseBtn" disabled>Pause</button>
+      <button id="resetBtn">Reset</button>
+      <button id="exportBtn" disabled>Export JSON</button>
+    </div>
+    <div id="status" class="status">Loading…</div>
+  </header>
+
+  <section id="scoreboard" class="scoreboard">
+    <div id="scoreCards" class="score-cards"></div>
+    <details class="games-detail">
+      <summary>Per-game details <span id="gamesCount"></span></summary>
+      <div class="table-wrap">
+        <table id="gamesTable">
+          <thead><tr></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+
+  <main id="panes"></main>
+
+  <details class="system-prompt">
+    <summary>System prompt</summary>
+    <pre id="systemPrompt" class="mono"></pre>
+  </details>
+
+
+  <template id="paneTemplate">
+    <section class="pane">
+      <div class="pane-head">
+        <span class="pane-id"></span>
+        <span class="model-name"></span>
+        <span class="pane-state"></span>
+        <label class="check join" title="Untick to leave this bot out"><input class="join-toggle" type="checkbox" checked> Join</label>
+      </div>
+      <details class="config">
+        <summary>Endpoint settings</summary>
+        <form>
+          <label>endpoint <input name="endpoint" placeholder="https://api.openai.com/v1/chat/completions"></label>
+          <label>api_key <input name="api_key" type="password" autocomplete="off"></label>
+          <label>model <input name="model"></label>
+          <label>temperature <input name="temperature" type="number" step="0.1" min="0"></label>
+          <p class="config-hint">Full API URL; the path picks the format: …/chat/completions, …/completions (text), …/decisions (OpenRouter Decisions API). mock://random is for testing.</p>
+          <div class="row">
+            <button type="submit">Save</button>
+            <label class="check"><input name="clear_api_key" type="checkbox"> Clear api_key</label>
+            <span class="config-msg"></span>
+          </div>
+        </form>
+      </details>
+      <div class="pane-body">
+        <div class="view"></div>
+        <dl class="stats"></dl>
+      </div>
+      <div class="pane-error"></div>
+      <details class="decisions">
+        <summary>Decision log <span class="decision-count"></span></summary>
+        <div class="decision-mix mono"></div>
+        <div class="decision-list"></div>
+      </details>
+      <details class="prompt-box">
+        <summary>Latest LLM input</summary>
+        <pre class="last-prompt mono"></pre>
+      </details>
+    </section>
+  </template>
+
+  <script type="module" src="arena.js"></script>
+</body>
+</html>
